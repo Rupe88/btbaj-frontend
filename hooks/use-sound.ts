@@ -6,7 +6,6 @@ const soundCache: { [key: string]: HTMLAudioElement } = {}
 
 export const useSound = () => {
   const playSound = useCallback((soundName: string) => {
-    // Map sound names to available paths
     const soundMap: { [key: string]: string } = {
       click: "/sounds/click.mp3",
       hover: "/sounds/hover.mp3",

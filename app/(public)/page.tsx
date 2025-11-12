@@ -6,16 +6,13 @@ import { motion } from 'framer-motion';
 import { GamingButton } from '@/components/ui/gaming-button';
 import { useRouter } from 'next/navigation';
 import { useSound } from '@/hooks/use-sound';
-import { useAuth } from '@/lib/hooks/use-auth';
 import { Platform, PlatformType, UserType } from '@/lib/types/platform';
 
 export default function LandingPage() {
   const router = useRouter();
   const { playSound } = useSound();
-  const { user, isLoading } = useAuth();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  // ✅ FIX: Consolidated all hooks at the top, removed duplicates
   const particles = useMemo(
     () =>
       [...Array(20)].map(() => ({
@@ -35,26 +32,6 @@ export default function LandingPage() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // ✅ FIX: Single redirect effect, no duplicates
-  useEffect(() => {
-    if (user && !isLoading) {
-      router.push('/select-platform');
-    }
-  }, [user, isLoading, router]);
-
-  // ✅ FIX: Single loading state check
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
-      </div>
-    );
-  }
-
-  // ✅ FIX: Single user redirect check
-  if (user) {
-    return null;
-  }
 
   const platforms: Platform[] = [
     {
